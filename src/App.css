@@ -30,7 +30,4 @@
     transform: rotate(360deg);
   }
 }
-.accordion__title{
-  display: flex;
-  justify-content: space-between;
-}
+

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import TableRow from './TableRow';
+import { Button, Checkbox, Form } from 'semantic-ui-react'
 
 export default class Index extends Component {
 
   constructor(props) {
       super(props);
-      this.state = {category: []};
+      this.state = {category: [], categoryName:'', categoryDesc:''};
     }
     data={
       "categories": [
@@ -107,37 +108,37 @@ export default class Index extends Component {
              })
       this.setState({ category: this.state.category });
     }
-    // handleSubmit (event) {
-    //   event.preventDefault();
-    //   console.log("form was submitted");
+    handleSubmit (event) {
+      event.preventDefault();
+      let appendCategory = this.state.category;    
+      let catId = [...this.state.category].pop() ? [...this.state.category].pop().id + 1 : 1; 
+      appendCategory.push({id:catId, name: this.state.categoryName, items:[]});   
+      this.setState({ categoryName:'', categoryDesc:'', category: appendCategory });
+    }
   
-    //   var text = this.state.text;
-    //   var newItems = this.state.category.push(text);
-  
-    //   console.log("submitted form has value ", text);
-    //   this.setState({ text: '', items: newItems });
-    // }
-  
-    // getCategory (event) {
-    //   var name = event.target.value;
-    //   console.log(name);
-    //   this.setState({ name: name });
-    // }
-    // getCategoryDescription (event) {
-    //   var text = event.target.value;
-    //   console.log(text);
-    //   this.setState({ text: text });
-    // }
+    getCategoryName (event) {
+      this.setState({ categoryName: event.target.value });
+    }
+    getCategoryDescription (event) {
+      this.setState({ categoryDesc: event.target.value });
+    }
     render() {
       return (
         <div>
-             {/* <p> Add Category </p>
-              <form onSubmit={this.handleSubmit.bind(this)}>
-                <input placeholder="Category Name" onChange={this.getCategory.bind(this)} value={this.state.name} />
-                <textarea placeholder="description"  onChange={this.getCategoryDescription.bind(this)} value={this.state.text}></textarea>
-                <button> Submit </button>
-              </form> */}
-
+             <h3> Add New Category </h3>
+              <Form onSubmit={this.handleSubmit.bind(this)}>
+              <Form.Group widths='equal'>
+                <Form.Field>
+                  <label>Category Name</label>
+                  <input placeholder='Category Name' onChange={this.getCategoryName.bind(this)} value={this.state.categoryName}  />
+                </Form.Field>
+                <Form.Field>
+                  <label>Description</label>
+                  <textarea placeholder="Description"  onChange={this.getCategoryDescription.bind(this)} value={this.state.categoryDesc} />
+                </Form.Field>
+              </Form.Group>
+                <Button type='submit'>Submit</Button>
+              </Form>
           <h3 align="center">Menus Data</h3>
           <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
