@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import TableRow from './TableRow';
 
 export default class Index extends Component {
@@ -97,51 +96,15 @@ export default class Index extends Component {
       const updatedCategory = this.state.category.filter( (item) => {
         return item.id != categoryId
       } )
-  
-      console.log(updatedCategory);
-      // this.setState({ category: updatedCategory });
+        this.setState({ category: updatedCategory });
     }
-    deleteItem (itemId) {
-    let  updatedItem = this.state.category.map( 
-      (cat) => {
-        return cat.items.filter((item)=>{    
-          return item.id != itemId
-        });
 
-      });
-      console.log(updatedItem);
-      // this.setState({ category: updatedItem });
-    }
-    // handleSubmit (event) {
-    //   event.preventDefault();
-    //   console.log("form was submitted");
-  
-    //   var text = this.state.text;
-    //   var newItems = this.state.items.push(text);
-  
-    //   console.log("submitted form has value ", text);
-    //   this.setState({ text: '', items: newItems });
-    // }
-  
-    // handleChange (event) {
-    //   var text = event.target.value;
-    //   console.log(text);
-    //   this.setState({ text: text });
-    // }
     render() {
       return (
         <div>
-             {/* <p> Add Category </p>
-              <form onSubmit={this.handleSubmit.bind(this)}>
-                <input placeholder="Category Name" onChange={this.handleChange.bind(this)} value={this.state.text} />
-                <textarea placeholder="description"  onChange={this.handleChange.bind(this)} value={this.state.text}></textarea>
-                <button> Submit </button>
-              </form> */}
-
           <h3 align="center">Menus Data</h3>
           <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
-          deleteItem={this.deleteItem.bind(this)}
           categories={this.state.category}  />
         </div>
       );
