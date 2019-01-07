@@ -141,6 +141,7 @@ export default class Index extends Component {
           <h3 align="center">Menus Data</h3>
           <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
+          deleteItem={this.deleteItem.bind(this)}
           categories={this.state.category}  />
         </div>
       );
