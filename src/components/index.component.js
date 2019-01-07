@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import TableRow from './TableRow';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 
@@ -142,7 +141,6 @@ export default class Index extends Component {
           <h3 align="center">Menus Data</h3>
           <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
-          deleteItem={this.deleteItem.bind(this)}
           categories={this.state.category}  />
         </div>
       );
