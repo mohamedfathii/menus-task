@@ -16,7 +16,8 @@ export default class Index extends Component {
       categoryDesc: '',
       itemName: '',
       itemPrice: '',
-      itemDesc: ''
+      itemDesc: '',
+      isAdmin: false
     };
   }
   /**
@@ -24,12 +25,15 @@ export default class Index extends Component {
    */
   componentDidMount() {
     axios.get('https://raw.githubusercontent.com/mohamedfathii/test/master/menu')
-    .then(response => {
-      this.setState({ category: response.data.categories });
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+      .then(response => {
+        this.setState({ category: response.data.categories });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+    /** get user type from local storage */
+    this.state.isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+    this.setState({ isAdmin: this.state.isAdmin });
   }
   /**
    * delete category
@@ -122,21 +126,25 @@ export default class Index extends Component {
   render() {
     return (
       <div>
-        <h3> Add New Category </h3>
-        <Form onSubmit={this.handleSubmit.bind(this)}>
-          <Form.Group widths='equal'>
-            <Form.Field>
-              <label>Category Name</label>
-              <input placeholder='Category Name' onChange={this.getCategoryName.bind(this)} value={this.state.categoryName} />
-            </Form.Field>
-            <Form.Field>
-              <label>Description</label>
-              <textarea placeholder="Description" onChange={this.getCategoryDescription.bind(this)} value={this.state.categoryDesc} />
-            </Form.Field>
-          </Form.Group>
-          <Button type='submit'>Submit</Button>
-        </Form>
-        <h3 align="center">Menus Data</h3>
+        {this.state.isAdmin ?
+          <div>
+            <h3> Add New Category </h3>
+            <Form onSubmit={this.handleSubmit.bind(this)}>
+              <Form.Group widths='equal'>
+                <Form.Field>
+                  <label>Category Name</label>
+                  <input placeholder='Category Name' onChange={this.getCategoryName.bind(this)} value={this.state.categoryName} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Description</label>
+                  <textarea placeholder="Description" onChange={this.getCategoryDescription.bind(this)} value={this.state.categoryDesc} />
+                </Form.Field>
+              </Form.Group>
+              <Button type='submit'>Submit</Button>
+            </Form>
+            <h3 align="center">Menus Data</h3>
+          </div> : null
+        }
         <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
           deleteItem={this.deleteItem.bind(this)}

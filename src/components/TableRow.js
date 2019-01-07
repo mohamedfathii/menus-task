@@ -11,6 +11,17 @@ class TableRow extends Component {
 
   constructor(props) {
     super(props);
+    /**
+     * initiate the state value
+     */
+    this.state = {
+      isAdmin: false
+    };
+  }
+  componentDidMount() {
+     /** get user type from local storage */
+    this.state.isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+    this.setState({ isAdmin: this.state.isAdmin });
   }
 
   render() {
@@ -23,14 +34,14 @@ class TableRow extends Component {
                 <span >
                   <AccordionItemTitle >
                     <h3>{cat.name}</h3>
-                    <span>
+                    {this.state.isAdmin ? <span >
                       <button className="btn btn-warning mr-2">Edit</button>
                       <button className="btn btn-danger" onClick={this.props.deleteCategory.bind(null, cat.id)} >Delete</button>
-                    </span>
+                    </span> : null}
                   </AccordionItemTitle>
                   <AccordionItemBody key={cat.id}>
                     <Accordion>
-                      <div className="p-4">
+                      {this.state.isAdmin ? <div className="p-4">
                         <Form onSubmit={this.props.handleSubmitItem.bind(null, cat.id)}>
                           <Form.Group widths='equal'>
                             <Form.Field>
@@ -49,15 +60,16 @@ class TableRow extends Component {
                           <Button type='submit'>Submit</Button>
                         </Form>
                       </div>
+                        : null}
                       {
                         cat.items.map((item, x) => {
                           return <AccordionItem key={x}>
                             <AccordionItemTitle >
                               <h6>{item.name}</h6>
-                              <span>
+                              {this.state.isAdmin ? <span>
                                 <button className="btn btn-warning  mr-2">Edit</button>
                                 <button className="btn btn-danger" onClick={this.props.deleteItem.bind(null, item.id)} >Delete</button>
-                              </span>
+                              </span> : null}
                             </AccordionItemTitle>
                             <AccordionItemBody>
                               <p>Description: {item.description}</p>
