@@ -35,7 +35,6 @@ class TableRow extends Component {
                   <AccordionItemTitle >
                     <h3>{cat.name}</h3>
                     {this.state.isAdmin ? <span >
-                      <button className="btn btn-warning mr-2">Edit</button>
                       <button className="btn btn-danger" onClick={this.props.deleteCategory.bind(null, cat.id)} >Delete</button>
                     </span> : null}
                   </AccordionItemTitle>
@@ -67,7 +66,6 @@ class TableRow extends Component {
                             <AccordionItemTitle >
                               <h6>{item.name}</h6>
                               {this.state.isAdmin ? <span>
-                                <button className="btn btn-warning  mr-2">Edit</button>
                                 <button className="btn btn-danger" onClick={this.props.deleteItem.bind(null, item.id)} >Delete</button>
                               </span> : null}
                             </AccordionItemTitle>
@@ -75,7 +73,6 @@ class TableRow extends Component {
                               <p>Description: {item.description}</p>
                               <p>Price: {item.price}</p>
                             </AccordionItemBody>
-
                           </AccordionItem>
                         })
                       }
