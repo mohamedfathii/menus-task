@@ -15,24 +15,24 @@ class TableRow extends Component {
   render() {
     return (
         <Accordion>
-        <AccordionItem>
           {
             this.props.categories.map((cat, i) => {
-            return(
-              <span>
-              <AccordionItemTitle key={cat.id}>
+              return(
+              <AccordionItem key={cat.id}>
+                <span >
+              <AccordionItemTitle >
               <h3>{cat.name}</h3>
               <span>
                 <button className="btn btn-warning">Edit</button>
                 <button className="btn btn-danger" onClick={ this.props.deleteCategory.bind(null, cat.id)} >Delete</button>
               </span>
           </AccordionItemTitle>
-          <AccordionItemBody>
+          <AccordionItemBody key={cat.id}>
           <Accordion>
           { 
            cat.items.map((item, x) => {
-              return   <AccordionItem >
-            <AccordionItemTitle key={x}>
+              return   <AccordionItem key={x}>
+            <AccordionItemTitle >
                 <h6>{item.name}</h6>
                 <span>
                   <button className="btn btn-warning">Edit</button>
@@ -50,8 +50,8 @@ class TableRow extends Component {
         </Accordion>
             </AccordionItemBody>
               </span>
-            )})}
         </AccordionItem>
+            )})}
         </Accordion>
     );
     
