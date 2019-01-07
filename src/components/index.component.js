@@ -1,174 +1,227 @@
 import React, { Component } from 'react';
 import TableRow from './TableRow';
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 
 export default class Index extends Component {
 
   constructor(props) {
-      super(props);
-      /**
-       * initiate the state value
-       */
-      this.state = {category: [], categoryName:'', categoryDesc:''};
-    }
-    data={
-      "categories": [
-        {
-          "id": 80877,
-          "name": "Appetizers",
-          "items": [
-            {
-              "id": 132548,
-              "name": "French Fries",
-              "description": "Custom premium cut by farm frites. Add melted cheese for 7LE - chili con carne for 9LE",
-              "price": 54.834
-            },
-            {
-              "id": 655881,
-              "name": "Nacho Chips & Salsa",
-              "description": "Homemade crispy nacho chips served with fresh salsa dip",
-              "price": 54.834
-            },
-            {
-              "id": 655882,
-              "name": "Sweet Potato Fries",
-              "description": "Served with hot mayo dip",
-              "price": 54.834
-            },
-            {
-              "id": 655883,
-              "name": "Seasoned Wedges",
-              "description": "Served with garlic mayo dip",
-              "price": 54.834
-            },
-            {
-              "id": 132565,
-              "name": "Chili Cheese Fries",
-              "description": "French fries, topped with chili con carne & melted cheddar cheese, served with sour cream and pickled jalapenos",
-              "price": 54.834
-            },
-            {
-              "id": 655884,
-              "name": "Potato Skins",
-              "description": "Loaded with cheese & chili beef ( served with sour cream)",
-              "price": 54.834
-            },
-            {
-              "id": 132549,
-              "name": "Onion Rings",
-              "description": "",
-              "price": 54.834
-            }
-          ]
-        },
-        {
-          "id": 21281,
-          "name": "Salads",
-          "items": [
-            {
-              "id": 655880,
-              "name": "BLT Salad",
-              "description": "Grilled bacon , lettuce , tomatoes with ranch sauce",
-              "price": 34.834
-            },
-            {
-              "id": 132570,
-              "name": "Caesar Salad",
-              "description": "Lettuce, Parmesan cheese, Croutons & Caesar dressing",
-              "price": 34.834
-            },
-            {
-              "id": 132574,
-              "name": "Garden Salad",
-              "description": "Mixed greens and fresh garden selections tossed in vinaigrette dressing",
-              "price": 34.834
-            },
-            {
-              "id": 164438,
-              "name": "Rocket Mushroom Salad",
-              "description": "Rocket leaves, fresh mushrooms, Parmesan cheese, Balsamic dressing",
-              "price": 34.834
-            }
-          ]
-        }
-      ]
-    }
+    super(props);
     /**
-     * set state with categories data
+     * initiate the state value
      */
-    componentDidMount(){
-      this.setState({ category: this.data.categories });
-    }
-    /**
-     * delete category
-     * @param {*} categoryId 
-     */
-    deleteCategory (categoryId) {
-      const updatedCategory = this.state.category.filter( (item) => {
-        return item.id != categoryId
-      } )
-        this.setState({ category: updatedCategory });
-    }
-    /**
-     * delete item from category
-     * @param {*} itemId 
-     */
-    deleteItem (itemId) {
-     this.state.category.forEach((cat)=>{
-          cat.items.forEach((item)=>{
-          return  item.id == itemId ? cat.items.splice(cat.items.indexOf(item),1) : this.state.category;
-          })
-             })
-      this.setState({ category: this.state.category });
-    }
-    /**
-     * handle add new category to categories Array
-     * @param {*} event 
-     */
-    handleSubmit (event) {
-      event.preventDefault();
-      let appendCategory = this.state.category;    
-      let catId = [...this.state.category].pop() ? [...this.state.category].pop().id + 1 : 1; 
-      appendCategory.push({id:catId, name: this.state.categoryName, items:[]});   
-      this.setState({ categoryName:'', categoryDesc:'', category: appendCategory });
-    }
+    this.state = {
+      category: [],
+      categoryName: '',
+      categoryDesc: '',
+      itemName: '',
+      itemPrice: '',
+      itemDesc: ''
+    };
+  }
+  data = {
+    "categories": [
+      {
+        "id": 80877,
+        "name": "Appetizers",
+        "items": [
+          {
+            "id": 132548,
+            "name": "French Fries",
+            "description": "Custom premium cut by farm frites. Add melted cheese for 7LE - chili con carne for 9LE",
+            "price": 54.834
+          },
+          {
+            "id": 655881,
+            "name": "Nacho Chips & Salsa",
+            "description": "Homemade crispy nacho chips served with fresh salsa dip",
+            "price": 54.834
+          },
+          {
+            "id": 655882,
+            "name": "Sweet Potato Fries",
+            "description": "Served with hot mayo dip",
+            "price": 54.834
+          },
+          {
+            "id": 655883,
+            "name": "Seasoned Wedges",
+            "description": "Served with garlic mayo dip",
+            "price": 54.834
+          },
+          {
+            "id": 132565,
+            "name": "Chili Cheese Fries",
+            "description": "French fries, topped with chili con carne & melted cheddar cheese, served with sour cream and pickled jalapenos",
+            "price": 54.834
+          },
+          {
+            "id": 655884,
+            "name": "Potato Skins",
+            "description": "Loaded with cheese & chili beef ( served with sour cream)",
+            "price": 54.834
+          },
+          {
+            "id": 132549,
+            "name": "Onion Rings",
+            "description": "",
+            "price": 54.834
+          }
+        ]
+      },
+      {
+        "id": 21281,
+        "name": "Salads",
+        "items": [
+          {
+            "id": 655880,
+            "name": "BLT Salad",
+            "description": "Grilled bacon , lettuce , tomatoes with ranch sauce",
+            "price": 34.834
+          },
+          {
+            "id": 132570,
+            "name": "Caesar Salad",
+            "description": "Lettuce, Parmesan cheese, Croutons & Caesar dressing",
+            "price": 34.834
+          },
+          {
+            "id": 132574,
+            "name": "Garden Salad",
+            "description": "Mixed greens and fresh garden selections tossed in vinaigrette dressing",
+            "price": 34.834
+          },
+          {
+            "id": 164438,
+            "name": "Rocket Mushroom Salad",
+            "description": "Rocket leaves, fresh mushrooms, Parmesan cheese, Balsamic dressing",
+            "price": 34.834
+          }
+        ]
+      }
+    ]
+  }
+  /**
+   * set state with categories data
+   */
+  componentDidMount() {
+    this.setState({ category: this.data.categories });
+  }
+  /**
+   * delete category
+   * @param {*} categoryId 
+   */
+  deleteCategory(categoryId) {
+    const updatedCategory = this.state.category.filter((item) => {
+      return item.id != categoryId
+    })
+    this.setState({ category: updatedCategory });
+  }
+  /**
+   * delete item from category
+   * @param {*} itemId 
+   */
+  deleteItem(itemId) {
+    this.state.category.forEach((cat) => {
+      cat.items.forEach((item) => {
+        return item.id == itemId ? cat.items.splice(cat.items.indexOf(item), 1) : this.state.category;
+      })
+    })
+    this.setState({ category: this.state.category });
+  }
+  /**
+   * handle add new category to categories Array
+   * @param {*} event 
+   */
+  handleSubmit(event) {
+    event.preventDefault();
+    let appendCategory = this.state.category;
+    let catId = [...this.state.category].pop() ? [...this.state.category].pop().id + 1 : 1;
+    appendCategory.push({ id: catId, name: this.state.categoryName, items: [] });
+    this.setState({ categoryName: '', categoryDesc: '', category: appendCategory });
+  }
   /**
    * get category name from user input 
    * @param {*} event 
    */
-    getCategoryName (event) {
-      this.setState({ categoryName: event.target.value });
-    }
-    /**
-     * get category description from user input 
-     * @param {*} event 
-     */
-    getCategoryDescription (event) {
-      this.setState({ categoryDesc: event.target.value });
-    }
-    render() {
-      return (
-        <div>
-             <h3> Add New Category </h3>
-              <Form onSubmit={this.handleSubmit.bind(this)}>
-              <Form.Group widths='equal'>
-                <Form.Field>
-                  <label>Category Name</label>
-                  <input placeholder='Category Name' onChange={this.getCategoryName.bind(this)} value={this.state.categoryName}  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Description</label>
-                  <textarea placeholder="Description"  onChange={this.getCategoryDescription.bind(this)} value={this.state.categoryDesc} />
-                </Form.Field>
-              </Form.Group>
-                <Button type='submit'>Submit</Button>
-              </Form>
-          <h3 align="center">Menus Data</h3>
-          <TableRow
+  getCategoryName(event) {
+    this.setState({ categoryName: event.target.value });
+  }
+  /**
+   * get category description from user input 
+   * @param {*} event 
+   */
+  getCategoryDescription(event) {
+    this.setState({ categoryDesc: event.target.value });
+  }
+
+  /**
+ * handle add new item 
+ * @param {*} event 
+ */
+  handleSubmitItem(catId) {
+    this.state.category.forEach((cat) => {
+      let itemId = [...cat.items].pop() ? [...cat.items].pop().id + 1 : 1;
+      return cat.id == catId ? cat.items.push({
+        id: itemId,
+        name: this.state.itemName,
+        price: this.state.itemPrice,
+        description: this.state.itemDesc
+      }) : this.state.category;
+    })
+    this.setState({
+      category: this.state.category
+    });
+  }
+  /**
+   * get item name from user input 
+   * @param {*} event 
+   */
+  getItemName(event) {
+    this.setState({ itemName: event.target.value });
+  }
+  /**
+   * get item price from user input 
+   * @param {*} event 
+   */
+  getItemPrice(event) {
+    this.setState({ itemPrice: event.target.value });
+  }
+  /**
+ * get item description from user input 
+ * @param {*} event 
+ */
+  getItemDescription(event) {
+    this.setState({ itemDesc: event.target.value });
+  }
+
+  render() {
+    return (
+      <div>
+        <h3> Add New Category </h3>
+        <Form onSubmit={this.handleSubmit.bind(this)}>
+          <Form.Group widths='equal'>
+            <Form.Field>
+              <label>Category Name</label>
+              <input placeholder='Category Name' onChange={this.getCategoryName.bind(this)} value={this.state.categoryName} />
+            </Form.Field>
+            <Form.Field>
+              <label>Description</label>
+              <textarea placeholder="Description" onChange={this.getCategoryDescription.bind(this)} value={this.state.categoryDesc} />
+            </Form.Field>
+          </Form.Group>
+          <Button type='submit'>Submit</Button>
+        </Form>
+        <h3 align="center">Menus Data</h3>
+        <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
           deleteItem={this.deleteItem.bind(this)}
-          categories={this.state.category}  />
-        </div>
-      );
-    }
+          categories={this.state.category}
+          handleSubmitItem={this.handleSubmitItem.bind(this)}
+          getItemName={this.getItemName.bind(this)}
+          getItemPrice={this.getItemPrice.bind(this)}
+          getItemDescription={this.getItemDescription.bind(this)}
+        />
+      </div>
+    );
   }
+}
