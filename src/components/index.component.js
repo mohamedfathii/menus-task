@@ -6,6 +6,9 @@ export default class Index extends Component {
 
   constructor(props) {
       super(props);
+      /**
+       * initiate the state value
+       */
       this.state = {category: [], categoryName:'', categoryDesc:''};
     }
     data={
@@ -90,15 +93,26 @@ export default class Index extends Component {
         }
       ]
     }
+    /**
+     * set state with categories data
+     */
     componentDidMount(){
       this.setState({ category: this.data.categories });
     }
+    /**
+     * delete category
+     * @param {*} categoryId 
+     */
     deleteCategory (categoryId) {
       const updatedCategory = this.state.category.filter( (item) => {
         return item.id != categoryId
       } )
         this.setState({ category: updatedCategory });
     }
+    /**
+     * delete item from category
+     * @param {*} itemId 
+     */
     deleteItem (itemId) {
      this.state.category.forEach((cat)=>{
           cat.items.forEach((item)=>{
@@ -107,6 +121,10 @@ export default class Index extends Component {
              })
       this.setState({ category: this.state.category });
     }
+    /**
+     * handle add new category to categories Array
+     * @param {*} event 
+     */
     handleSubmit (event) {
       event.preventDefault();
       let appendCategory = this.state.category;    
@@ -114,10 +132,17 @@ export default class Index extends Component {
       appendCategory.push({id:catId, name: this.state.categoryName, items:[]});   
       this.setState({ categoryName:'', categoryDesc:'', category: appendCategory });
     }
-  
+  /**
+   * get category name from user input 
+   * @param {*} event 
+   */
     getCategoryName (event) {
       this.setState({ categoryName: event.target.value });
     }
+    /**
+     * get category description from user input 
+     * @param {*} event 
+     */
     getCategoryDescription (event) {
       this.setState({ categoryDesc: event.target.value });
     }
