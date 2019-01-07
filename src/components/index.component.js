@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TableRow from './TableRow';
 import { Button, Form } from 'semantic-ui-react'
+import axios from 'axios';
 
 export default class Index extends Component {
 
@@ -104,7 +105,13 @@ export default class Index extends Component {
    * set state with categories data
    */
   componentDidMount() {
-    this.setState({ category: this.data.categories });
+    axios.get('https://raw.githubusercontent.com/mohamedfathii/test/master/menu')
+    .then(response => {
+      this.setState({ category: response.data.categories });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
   }
   /**
    * delete category
@@ -112,7 +119,7 @@ export default class Index extends Component {
    */
   deleteCategory(categoryId) {
     const updatedCategory = this.state.category.filter((item) => {
-      return item.id != categoryId
+      return item.id !== categoryId
     })
     this.setState({ category: updatedCategory });
   }
@@ -123,7 +130,7 @@ export default class Index extends Component {
   deleteItem(itemId) {
     this.state.category.forEach((cat) => {
       cat.items.forEach((item) => {
-        return item.id == itemId ? cat.items.splice(cat.items.indexOf(item), 1) : this.state.category;
+        return item.id === itemId ? cat.items.splice(cat.items.indexOf(item), 1) : this.state.category;
       })
     })
     this.setState({ category: this.state.category });
@@ -161,7 +168,7 @@ export default class Index extends Component {
   handleSubmitItem(catId) {
     this.state.category.forEach((cat) => {
       let itemId = [...cat.items].pop() ? [...cat.items].pop().id + 1 : 1;
-      return cat.id == catId ? cat.items.push({
+      return cat.id === catId ? cat.items.push({
         id: itemId,
         name: this.state.itemName,
         price: this.state.itemPrice,
