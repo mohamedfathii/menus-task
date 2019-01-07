@@ -9,7 +9,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 class TableRow extends Component {
 
   constructor(props) {
-        super(props);        
+        super(props);   
     }
 
   render() {
@@ -36,7 +36,7 @@ class TableRow extends Component {
                 <h6>{item.name}</h6>
                 <span>
                   <button className="btn btn-warning">Edit</button>
-                  <button className="btn btn-danger" >Delete</button>
+                  <button className="btn btn-danger" onClick={ this.props.deleteItem.bind(null , item.id)} >Delete</button>
                 </span>
                 <AccordionItemBody>
                  <p>Descritpon: {item.description}</p>

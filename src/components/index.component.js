@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import TableRow from './TableRow';
 
 export default class Index extends Component {
@@ -98,13 +99,49 @@ export default class Index extends Component {
       } )
         this.setState({ category: updatedCategory });
     }
-
+    deleteItem (itemId) {
+     this.state.category.forEach((cat)=>{
+          cat.items.forEach((item)=>{
+          return  item.id == itemId ? cat.items.splice(cat.items.indexOf(item),1) : this.state.category;
+          })
+             })
+      this.setState({ category: this.state.category });
+    }
+    // handleSubmit (event) {
+    //   event.preventDefault();
+    //   console.log("form was submitted");
+  
+    //   var text = this.state.text;
+    //   var newItems = this.state.category.push(text);
+  
+    //   console.log("submitted form has value ", text);
+    //   this.setState({ text: '', items: newItems });
+    // }
+  
+    // getCategory (event) {
+    //   var name = event.target.value;
+    //   console.log(name);
+    //   this.setState({ name: name });
+    // }
+    // getCategoryDescription (event) {
+    //   var text = event.target.value;
+    //   console.log(text);
+    //   this.setState({ text: text });
+    // }
     render() {
       return (
         <div>
+             {/* <p> Add Category </p>
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <input placeholder="Category Name" onChange={this.getCategory.bind(this)} value={this.state.name} />
+                <textarea placeholder="description"  onChange={this.getCategoryDescription.bind(this)} value={this.state.text}></textarea>
+                <button> Submit </button>
+              </form> */}
+
           <h3 align="center">Menus Data</h3>
           <TableRow
           deleteCategory={this.deleteCategory.bind(this)}
+          deleteItem={this.deleteItem.bind(this)}
           categories={this.state.category}  />
         </div>
       );
